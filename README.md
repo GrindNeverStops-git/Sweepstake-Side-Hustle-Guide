@@ -1,2 +1,2 @@
-# Sweepstake-Casino-Guide
-Full Guide to the Sweepstake Casino Side Hustle
+# Sweepstake-Side-Hustle-Guide
+Full Guide to the Sweepstake  Side Hustle
