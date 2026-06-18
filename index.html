@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Money Guide — Sweepstakes Side Hustle</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0a0c0f;
+    --bg2:       #111418;
+    --bg3:       #181d24;
+    --border:    rgba(255,255,255,0.07);
+    --border2:   rgba(255,255,255,0.13);
+    --gold:      #c9a84c;
+    --gold-dim:  #7a5e24;
+    --gold-glow: rgba(201,168,76,0.12);
+    --green:     #2ecc71;
+    --green-dim: rgba(46,204,113,0.12);
+    --text:      #e8eaed;
+    --muted:     #6b7280;
+    --muted2:    #9ca3af;
+    --font:      'Space Grotesk', sans-serif;
+    --mono:      'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,12,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: var(--gold); letter-spacing: 0.08em; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--muted2); font-size: 13px; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--gold); color: #0a0c0f;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+    padding: 7px 16px; border-radius: 4px; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    max-width: 760px; margin: 0 auto; text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--gold); text-transform: uppercase;
+    border: 1px solid var(--gold-dim);
+    padding: 4px 14px; border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    color: #fff; margin-bottom: 1rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--muted2);
+    max-width: 540px; margin: 0 auto 2.5rem;
+  }
+  .hero-flag {
+    display: inline-block; font-size: 13px;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border2);
+    padding: 4px 14px; border-radius: 20px; color: var(--muted2);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── STAT BAR ── */
+  .stats {
+    display: flex; justify-content: center; gap: 0;
+    border: 1px solid var(--border2);
+    border-radius: 8px; overflow: hidden;
+    max-width: 560px; margin: 0 auto 1.5rem;
+  }
+  .stat {
+    flex: 1; padding: 1.2rem 1rem; text-align: center;
+    border-right: 1px solid var(--border2);
+    background: var(--bg2);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--mono); font-size: 1.6rem; font-weight: 700;
+    color: var(--green); display: block; line-height: 1.1;
+  }
+  .stat-lbl { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+  .btn-primary {
+    background: var(--gold); color: #0a0c0f;
+    font-weight: 700; font-size: 14px; padding: 12px 28px;
+    border-radius: 4px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    font-size: 14px; padding: 12px 28px;
+    border: 1px solid var(--border2); border-radius: 4px;
+    text-decoration: none; transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.3); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none; border-top: 1px solid var(--border);
+    max-width: 1000px; margin: 0 auto;
+  }
+
+  /* ── SECTION ── */
+  section { padding: 4rem 2rem; max-width: 860px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .section-title { font-size: 1.7rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+  .section-sub { color: var(--muted2); margin-bottom: 2.5rem; max-width: 540px; }
+
+  /* ── HOW MUCH ── */
+  .earn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .earn-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.4rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .earn-card:hover { border-color: var(--border2); }
+  .earn-card-num {
+    font-family: var(--mono); font-size: 1.5rem; font-weight: 700;
+    color: var(--green); margin-bottom: 6px;
+  }
+  .earn-card-label { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .earn-card-desc { font-size: 14px; color: var(--muted2); line-height: 1.5; }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 0 1.25rem; padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    color: var(--gold-dim); padding-top: 3px;
+    letter-spacing: 0.05em;
+  }
+  .step-content {}
+  .step-title { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 6px; }
+  .step-body { font-size: 14px; color: var(--muted2); line-height: 1.65; }
+  .step-body strong { color: var(--text); font-weight: 500; }
+  .tip {
+    display: inline-block; margin-top: 10px;
+    background: var(--gold-glow); border-left: 2px solid var(--gold);
+    padding: 6px 12px; border-radius: 0 4px 4px 0;
+    font-size: 13px; color: var(--muted2);
+  }
+  .tip strong { color: var(--gold); }
+  code {
+    font-family: var(--mono); font-size: 12px;
+    background: rgba(255,255,255,0.07); padding: 2px 6px; border-radius: 3px;
+    color: var(--muted2);
+  }
+
+  /* ── SPREADSHEET CTA ── */
+  .sheet-cta {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 600px; margin: 0 auto;
+  }
+  .sheet-icon {
+    font-size: 2.5rem; margin-bottom: 1rem; display: block;
+  }
+  .sheet-cta h2 { font-size: 1.3rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+  .sheet-cta p { font-size: 14px; color: var(--muted2); margin-bottom: 1.5rem; }
+  .sheet-features {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 1.8rem;
+  }
+  .sheet-feat {
+    font-size: 12px; color: var(--muted2);
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    padding: 5px 12px; border-radius: 20px;
+  }
+  .sheet-feat::before { content: '✓ '; color: var(--green); }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    max-width: 860px; margin: 0 auto;
+    padding: 0 2rem 3rem;
+    font-size: 12px; color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); letter-spacing: 0.06em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    section { padding: 3rem 1.25rem; }
+    .stats { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border2); }
+    .stat:last-child { border-bottom: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">$WEEPSTAKES.GG</a>
+  <div class="nav-links">
+    <a href="#earnings">Earnings</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#spreadsheet">Spreadsheet</a>
+  </div>
+  <a class="nav-cta" href="https://docs.google.com/spreadsheets/d/1Xm0gA1nFg-WOQ82ja9UAs6LY2VIamnen/edit?gid=1653245466#gid=1653245466" target="_blank">View Spreadsheet ↗</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Free Side Hustle Guide</div>
+  <h1>Beat sweepstakes sites<br>at their <span>own game</span></h1>
+  <p class="hero-sub">These sites give away free money every single day just to keep you logging in. Here's how to collect it systematically — without spending a cent.</p>
+  <div class="hero-flag">🇺🇸 USA only</div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num">$750–1k</span>
+      <div class="stat-lbl">per month, consistent</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">50+</span>
+      <div class="stat-lbl">sites tracked</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">~5 min</span>
+      <div class="stat-lbl">daily on PC</div>
+    </div>
+  </div>
+
+  <div class="hero-btns">
+    <a class="btn-primary" href="https://docs.google.com/spreadsheets/d/1Xm0gA1nFg-WOQ82ja9UAs6LY2VIamnen/edit?gid=1653245466#gid=1653245466" target="_blank">View the Spreadsheet</a>
+    <a class="btn-ghost" href="#strategy">Read the Guide ↓</a>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- EARNINGS -->
+<section id="earnings">
+  <div class="section-label">Earnings</div>
+  <div class="section-title">How much can you actually make?</div>
+  <p class="section-sub">This isn't a "quit your job" hustle — but it adds up fast when you're consistent.</p>
+
+  <div class="earn-grid">
+    <div class="earn-card">
+      <div class="earn-card-num">$750–1,000</div>
+      <div class="earn-card-label">Consistent monthly floor</div>
+      <div class="earn-card-desc">Farming 50+ sites daily, stacking bonuses, washing strategically with no money at risk.</div>
+    </div>
+    <div class="earn-card">
+      <div class="earn-card-num">$1,500+</div>
+      <div class="earn-card-label">Strong promo months</div>
+      <div class="earn-card-desc">Holiday sales, VIP transfer events, and discounted coin packages stack fast when timed right.</div>
+    </div>
+    <div class="earn-card">
+      <div class="earn-card-num">5–10 min</div>
+      <div class="earn-card-label">Daily time investment</div>
+      <div class="earn-card-desc">PC workflow is faster. Mobile takes slightly longer. Either way it fits around a full-time job.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <div class="section-label">Strategy</div>
+  <div class="section-title">The full playbook</div>
+  <p class="section-sub">Six things that separate people who actually cash out from people who don't.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">Registration & verification</div>
+        <div class="step-body">
+          Register with the <strong>exact name on your ID</strong> — Joseph ≠ Joe. A mismatch will block your redemption when it matters most. Get verified before you deposit or redeem anything. Some sites have issues with online banks, so keep a traditional checking account as your payout method. Set it up early.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">Washing — playthrough before redemption</div>
+        <div class="step-body">
+          Most sites require one playthrough before you can cash out. The goal is to minimize what you lose during that wash.
+          <br><br>
+          <strong>Best options:</strong> High-RTP slots and Plinko (low volatility) for steady returns. Blackjack with basic strategy for slow but reliable results. WowVegas "Happy Hours" give discounted playthrough rates — a significant edge if you time it.
+          <div class="tip"><strong>Key principle:</strong> $1 × 100 hands beats $20 × 5 hands every time. Volume, not bet size, is how you approach true RTP.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">Daily farming — efficiency is everything</div>
+        <div class="step-body">
+          <strong>On PC:</strong> Save all daily claim links in a Chrome bookmark folder → right-click the folder → "Open all." Then fly through with <code>Ctrl+Tab</code> and <code>Ctrl+W</code>. 40+ sites in about 5 minutes.
+          <br><br>
+          <strong>On mobile:</strong> Safari tab groups with Face ID logins. Still under 10 minutes. The spreadsheet has every claim link organized by platform.
+          <div class="tip"><strong>Geoblock errors?</strong> Switch from mobile data to Wi-Fi.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">Promos — optional but powerful</div>
+        <div class="step-body">
+          Sites regularly run sales where you buy coins at a steep discount. Example: a $200 package on sale for $100, or a $40 return on a $25 purchase. These aren't required — you can run this entire strategy for free — but they multiply earnings fast when stacked with your existing dailies.
+          <br><br>
+          <strong>Rule:</strong> Only buy promos you can afford to treat as gone. The edge is real but so is variance.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-title">Discipline — the hardest part</div>
+        <div class="step-body">
+          Don't blow your dailies chasing a big slot spin. Collect them, combine them with a good promo, wash carefully, and cash out. Boring process = consistent money.
+          <br><br>
+          Track your wins and losses in a spreadsheet. It keeps you grounded and makes tax time significantly easier.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <div class="step-title">The bottom line</div>
+        <div class="step-body">
+          This isn't about jackpots. It's about stacking dailies, minimizing risk, and cashing out with discipline. With consistency across 50+ sites it's a realistic $750–$1,000/month side stream — sometimes more. Think of it as free gas, groceries, or a year of Netflix for about 5 minutes of effort a day.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SPREADSHEET -->
+<section id="spreadsheet">
+  <div class="sheet-cta">
+    <span class="sheet-icon">📊</span>
+    <h2>Master Spreadsheet — All 50+ Sites</h2>
+    <p>Every site I farm daily, with claim links, platform info, bonus amounts, and quality ratings — organized so you can open everything in one click.</p>
+    <div class="sheet-features">
+      <span class="sheet-feat">Direct claim links</span>
+      <span class="sheet-feat">Platform tags</span>
+      <span class="sheet-feat">Bonus amounts</span>
+      <span class="sheet-feat">Quality ratings</span>
+      <span class="sheet-feat">Updated regularly</span>
+    </div>
+    <a class="btn-primary" href="https://docs.google.com/spreadsheets/d/1Xm0gA1nFg-WOQ82ja9UAs6LY2VIamnen/edit?gid=1653245466#gid=1653245466" target="_blank">Open the Spreadsheet ↗</a>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>Disclaimer:</strong> This guide is for informational purposes only. Sweepstakes platforms operate legally in most US states but laws vary — confirm eligibility in your state before participating. Earnings figures reflect personal experience and are not guaranteed. This is not financial advice. If you choose to purchase promotional packages, only spend what you can comfortably lose. Play responsibly.
+</div>
+
+<footer>
+  $WEEPSTAKES.GG &nbsp;·&nbsp; UPDATED REGULARLY &nbsp;·&nbsp; USA ONLY
+</footer>
+
+</body>
+</html>
