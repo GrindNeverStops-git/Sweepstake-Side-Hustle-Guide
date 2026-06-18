@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Tracker — Sweepstakes Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #080e14;
+    --bg2:      #0c1520;
+    --bg3:      #101c2a;
+    --bg4:      #0a1624;
+    --border:   rgba(0,200,255,0.08);
+    --border2:  rgba(0,200,255,0.18);
+    --cyan:     #00c8ff;
+    --cyan-dim: rgba(0,200,255,0.12);
+    --cyan-glow:rgba(0,200,255,0.06);
+    --green:    #00e676;
+    --green2:   #00c853;
+    --yellow:   #ffd600;
+    --orange:   #ff9100;
+    --red:      #ff3d00;
+    --text:     #d0e8f5;
+    --muted:    #4a6a80;
+    --muted2:   #7a9ab0;
+    --font:     'Inter', sans-serif;
+    --mono:     'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 13px; line-height: 1.5; min-height: 100vh; }
+
+  /* NAV */
+  nav {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border2);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; height: 52px;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--cyan); text-decoration: none; letter-spacing: 0.1em; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--muted2); font-size: 12px; text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-updated { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: linear-gradient(180deg, #0c1a28 0%, var(--bg) 100%);
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header h1 {
+    font-family: var(--mono); font-size: 18px; font-weight: 700;
+    color: var(--cyan); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .page-header p { font-size: 12px; color: var(--muted2); }
+  .page-header p strong { color: var(--cyan); }
+  .header-tabs { display: flex; gap: 8px; margin-top: 1rem; }
+  .header-tab {
+    font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 4px;
+    border: 1px solid var(--border2); background: var(--bg3); color: var(--muted2);
+    cursor: pointer; transition: all 0.15s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .header-tab:hover { color: var(--cyan); border-color: var(--cyan); }
+  .header-tab.active { background: var(--cyan-dim); color: var(--cyan); border-color: var(--cyan); }
+  .header-tab .tab-icon { font-size: 14px; }
+
+  /* CONTROLS BAR */
+  .controls {
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 8px 1.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    position: sticky; top: 52px; z-index: 100;
+  }
+  .filter-group { display: flex; gap: 4px; }
+  .filter-btn {
+    font-family: var(--font); font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 3px; cursor: pointer;
+    border: 1px solid var(--border2); background: transparent; color: var(--muted2);
+    transition: all 0.12s; letter-spacing: 0.02em;
+  }
+  .filter-btn:hover { color: var(--cyan); border-color: rgba(0,200,255,0.4); }
+  .filter-btn.active { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
+
+  .sep { width: 1px; background: var(--border2); height: 20px; margin: 0 4px; }
+
+  .search-wrap { position: relative; }
+  .search-wrap input {
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: 3px;
+    color: var(--text); font-family: var(--font); font-size: 12px;
+    padding: 5px 10px 5px 28px; width: 220px; outline: none; transition: border-color 0.15s;
+  }
+  .search-wrap input:focus { border-color: var(--cyan); }
+  .search-wrap input::placeholder { color: var(--muted); }
+  .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; pointer-events: none; }
+
+  .sort-select {
+    font-family: var(--font); font-size: 11px; background: var(--bg3);
+    border: 1px solid var(--border2); border-radius: 3px; color: var(--muted2);
+    padding: 4px 8px; cursor: pointer; outline: none;
+  }
+
+  .count-label { font-size: 11px; color: var(--muted); margin-left: auto; font-style: italic; }
+  .count-label strong { color: var(--cyan); font-style: normal; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+  thead { position: sticky; top: 102px; z-index: 50; }
+  thead tr { background: var(--bg3); }
+  th {
+    padding: 8px 10px; text-align: left;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--muted); text-transform: uppercase; white-space: nowrap;
+    border-bottom: 1px solid var(--border2); cursor: pointer; user-select: none;
+    border-right: 1px solid var(--border);
+  }
+  th:last-child { border-right: none; }
+  th:hover { color: var(--muted2); }
+  th.sorted { color: var(--cyan); }
+  th .arr { margin-left: 3px; opacity: 0.4; }
+  th.sorted .arr { opacity: 1; }
+
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  tbody tr:hover { background: rgba(0,200,255,0.04); }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+  tbody tr:nth-child(even):hover { background: rgba(0,200,255,0.04); }
+
+  td { padding: 8px 10px; vertical-align: middle; border-right: 1px solid var(--border); }
+  td:last-child { border-right: none; }
+
+  /* CELL STYLES */
+  .cell-name { display: block; }
+  .name-block {
+    display: block; width: 160px;
+    padding: 5px 10px; border-radius: 3px;
+    font-weight: 700; font-size: 13px; text-decoration: none;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    transition: opacity 0.12s;
+  }
+  .name-block:hover { opacity: 0.82; }
+  .name-s     { background: #00bfff; color: #000; }
+  .name-a     { background: #00e676; color: #000; }
+  .name-b     { background: #ffd600; color: #000; }
+  .name-plain { background: transparent; color: var(--muted2); }
+
+  .signup-btn {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--cyan); text-decoration: none; white-space: nowrap;
+    border: 1px solid rgba(0,200,255,0.4); padding: 3px 10px; border-radius: 2px;
+    background: var(--cyan-dim); transition: all 0.12s; display: inline-block;
+  }
+  .signup-btn:hover { background: rgba(0,200,255,0.2); border-color: var(--cyan); }
+
+  .tier-badge {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    padding: 2px 7px; border-radius: 2px; display: inline-block; text-align: center; min-width: 26px;
+  }
+  .tier-SS { background: rgba(255,214,0,0.15); color: var(--yellow); border: 1px solid rgba(255,214,0,0.3); }
+  .tier-S  { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.3); }
+  .tier-A  { background: rgba(0,200,255,0.12); color: var(--cyan); border: 1px solid rgba(0,200,255,0.3); }
+  .tier-B  { background: rgba(255,145,0,0.1); color: var(--orange); border: 1px solid rgba(255,145,0,0.25); }
+  .tier-C  { background: rgba(255,255,255,0.05); color: var(--muted2); border: 1px solid var(--border2); }
+
+  .daily { font-family: var(--mono); font-weight: 700; color: var(--green); font-size: 12px; }
+
+  .reset-S { font-size: 10px; color: var(--green2); font-weight: 600; }
+  .reset-T { font-size: 10px; color: var(--yellow); font-weight: 600; }
+
+  .yes-dot { color: var(--green); font-weight: 700; font-size: 13px; }
+  .no-dot  { color: var(--muted); }
+
+  .vip-amazing { color: var(--yellow); font-weight: 700; font-size: 11px; }
+  .vip-great   { color: var(--cyan); font-weight: 600; font-size: 11px; }
+  .vip-yes     { color: var(--muted2); font-size: 11px; }
+
+  .code-cell { font-family: var(--mono); font-size: 10px; color: var(--cyan); background: rgba(0,200,255,0.06); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+
+  .notes-cell { color: var(--muted2); font-size: 11px; max-width: 240px; line-height: 1.4; }
+  .notes-trunc { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; cursor: pointer; }
+  .notes-trunc.expanded { white-space: normal; }
+  .games-cell { color: var(--muted2); font-size: 11px; white-space: nowrap; }
+
+  /* SPORTSBOOK SECTION */
+  .sports-section { padding: 2rem 1.5rem; }
+  .sports-title { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--cyan); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; border-bottom: 1px solid var(--border2); padding-bottom: 8px; }
+  .sports-card {
+    background: var(--bg2); border: 1px solid var(--border2); border-radius: 6px;
+    padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1.5rem; max-width: 560px;
+  }
+  .sports-card-name { font-weight: 700; color: var(--cyan); font-size: 14px; }
+  .sports-card-desc { font-size: 12px; color: var(--muted2); margin-top: 3px; }
+  .sports-card-offer { font-family: var(--mono); font-size: 11px; color: var(--green); font-weight: 700; margin-top: 4px; }
+
+  /* LEGEND */
+  .legend { padding: 0.75rem 1.5rem; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted2); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 1.25rem 1.5rem; text-align: center; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; }
+
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+    .header-tabs { overflow-x: auto; }
+    .controls { top: 52px; }
+    thead { top: 114px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">$WEEPSTAKES.GG</a>
+  <div class="nav-links">
+    <a href="index.html">Guide</a>
+    <a href="tracker.html" class="active">Tracker</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-updated">Last updated: 6/17/2026</span>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Full List of Sweepstakes Casinos 2026</h1>
+  <p>You've found the <strong>#1 most trusted</strong> and complete list of sweepstakes casinos offering <strong>free daily SC</strong>. Every link includes your referral code. Enjoy!</p>
+  <div class="header-tabs">
+    <a href="tracker.html" class="header-tab active"><span class="tab-icon">🎰</span> Sweeps Casinos</a>
+    <a href="index.html" class="header-tab"><span class="tab-icon">📖</span> Full Guide</a>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="tier-badge tier-SS">SS</span> Top tier — highest value</div>
+  <div class="legend-item"><span class="tier-badge tier-S">S</span> Great</div>
+  <div class="legend-item"><span class="tier-badge tier-A">A</span> Good</div>
+  <div class="legend-item"><span class="tier-badge tier-B">B</span> Average</div>
+  <div class="legend-item"><span class="tier-badge tier-C">C</span> Low value</div>
+  <div class="legend-item" style="margin-left:8px;"><span class="reset-S">STANDARD</span> = same time daily</div>
+  <div class="legend-item"><span class="reset-T">TIMED</span> = resets from claim</div>
+</div>
+
+<div class="controls">
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setTier('all',this)">All</button>
+    <button class="filter-btn" onclick="setTier('best',this)">Best</button>
+    <button class="filter-btn" onclick="setTier('new',this)">New</button>
+  </div>
+  <div class="sep"></div>
+  <div class="filter-group" id="tier-btns">
+    <button class="filter-btn" onclick="setTier('SS',this)">SS</button>
+    <button class="filter-btn" onclick="setTier('S',this)">S</button>
+    <button class="filter-btn" onclick="setTier('A',this)">A</button>
+    <button class="filter-btn" onclick="setTier('B',this)">B</button>
+    <button class="filter-btn" onclick="setTier('C',this)">C</button>
+  </div>
+  <div class="sep"></div>
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search" placeholder="Search casinos, notes, codes..." oninput="applyFilters()">
+  </div>
+  <select class="sort-select" id="sort-select" onchange="applyFilters()">
+    <option value="default">Sort: Default (Tier)</option>
+    <option value="daily-desc">Daily SC: High to Low</option>
+    <option value="daily-asc">Daily SC: Low to High</option>
+    <option value="name-asc">Name: A-Z</option>
+  </select>
+  <span class="count-label" id="count-label">Showing <strong>0</strong> of <strong>0</strong> casinos</span>
+</div>
+
+<div class="table-wrap">
+  <table id="tracker-table">
+    <thead>
+      <tr>
+        <th style="width:160px">Name</th>
+        <th style="width:60px">Signup</th>
+        <th style="width:44px" onclick="sortBy('tier')">Tier <span class="arr">↕</span></th>
+        <th style="width:70px" onclick="sortBy('daily')">Daily SC <span class="arr">↕</span></th>
+        <th style="width:80px">Reset</th>
+        <th style="width:130px">Referral Code</th>
+        <th style="width:54px">Streak</th>
+        <th style="width:90px">VIP</th>
+        <th style="width:150px">Fav Games</th>
+        <th>Notes (tap to expand)</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div class="sports-section">
+  <div class="sports-title">Sportsbook</div>
+  <div class="sports-card">
+    <div>
+      <div class="sports-card-name">Onyx Odds</div>
+      <div class="sports-card-desc">Sportsbetting + Blackjack. New player promo.</div>
+      <div class="sports-card-offer">Deposit $10, get $100 in Bonus Bets</div>
+    </div>
+    <a class="signup-btn" href="https://onyxodds.com/?promo_code=TQ014924" target="_blank">Sign Up</a>
+  </div>
+</div>
+
+<footer>$WEEPSTAKES.GG &nbsp;·&nbsp; UPDATED REGULARLY &nbsp;·&nbsp; USA ONLY</footer>
+
+<script>
+const sites = [
+  {name:"Jackpot Go",url:"https://game.jackpotgo.com/?invite_code=G8V4X4BA",tier:"SS",daily:7.00,reset:"Standard",code:"G8V4X4BA",streak:true,vip:"Yes",games:"Blackjack, Roulette",notes:"Purchase all Weekly Subscriptions, making $220 per month with this!",isnew:false,isbest:true},
+  {name:"Lavish Luck",url:"https://invite.lavishluck.net/8dID/0cyelj9k?c=KR44G8DP",tier:"SS",daily:7.00,reset:"Standard",code:"KR44G8DP",streak:false,vip:"Yes",games:"Blackjack, Roulette",notes:"Purchase all Weekly Subscriptions, making $220 per month with this!",isnew:false,isbest:true},
+  {name:"Cider Casino",url:"https://cidercasino.onelink.me/QfGN/oio1bede?c=KGSBWKW1",tier:"SS",daily:7.00,reset:"Standard",code:"KGSBWKW1",streak:false,vip:"Yes",games:"Blackjack, Roulette",notes:"Purchase all Weekly Subscriptions, making $220 per month with this!",isnew:true,isbest:true},
+  {name:"Gleaming Slots",url:"https://gleamingslots.onelink.me/W074/dd5xdk4e?invite_code=PURW9673",tier:"SS",daily:7.00,reset:"Standard",code:"PURW9673",streak:true,vip:"Yes",games:"Blackjack, Roulette",notes:"Purchase all Weekly Subscriptions — app only. Making $220/mo with this!",isnew:true,isbest:true},
+  {name:"The Boss Casino",url:"https://theboss.us/?referralcode=da543857-21f2-4c72-8edd-c25ffb9e0f8c",tier:"S",daily:2.00,reset:"Timed",code:"",streak:false,vip:"Amazing VIP",games:"Slots only",notes:"VIP MASSIVELY increases Daily! (Starts low)",isnew:true,isbest:false},
+  {name:"Zula",url:"https://www.zulacasino.com/signup/166fe873-8828-479f-96d8-9367035c5bc9",tier:"S",daily:1.00,reset:"Standard",code:"",streak:false,vip:"",games:"Starspell, The Great Pigsby",notes:"",isnew:false,isbest:true},
+  {name:"Lucky Party",url:"https://luckparty.com/signup/7da92611-73b3-47bf-b256-791d9ff88401",tier:"S",daily:1.00,reset:"Standard",code:"",streak:false,vip:"",games:"Starspell, The Great Pigsby",notes:"",isnew:false,isbest:false},
+  {name:"Chumba Casino",url:"https://www.chumbacasino.com/",tier:"S",daily:1.00,reset:"Standard",code:"",streak:true,vip:"",games:"Blackjack",notes:"",isnew:false,isbest:true},
+  {name:"Sportzino",url:"https://sportzino.com/signup/a26b3b8b-c215-43fe-beee-6708cf4227fa",tier:"S",daily:1.00,reset:"Standard",code:"",streak:true,vip:"",games:"Sports Betting, low odds",notes:"",isnew:false,isbest:false},
+  {name:"Crown Coin Casino",url:"https://crowncoinscasino.com/?utm_campaign=a89ccc53-834f-4833-ae8d-c05e47eee2f7&utm_source=friends",tier:"S",daily:1.00,reset:"Standard",code:"",streak:true,vip:"Amazing VIP",games:"Blackjack, Dice",notes:"VIP is huge! Amazing deals",isnew:false,isbest:true},
+  {name:"Grand Vault Casino",url:"https://grandvaultcasino.com/games/home?referral=q/NqlxBAh60wuZivIyaGfwTy3o9Qw74Y/lcxX0do99g=",tier:"S",daily:1.00,reset:"Timed",code:"",streak:false,vip:"Amazing VIP",games:"Blackjack",notes:"3x Playthrough",isnew:false,isbest:false},
+  {name:"WOW Vegas",url:"https://www.wowvegas.com/?raf=3841517",tier:"S",daily:1.00,reset:"Standard",code:"3841517",streak:false,vip:"Yes",games:"Dice",notes:"Frequent Deals, follow Facebook for daily dollar",isnew:false,isbest:true},
+  {name:"Meta Win",url:"https://metawin.us/84057171",tier:"S",daily:1.00,reset:"Standard",code:"84057171",streak:false,vip:"Yes",games:"Dice",notes:"Frequent Deals",isnew:true,isbest:false},
+  {name:"American Luck",url:"https://americanluck.com/signup/c9886be2-d0ce-48d2-bf7c-a144e1a27ca3",tier:"S",daily:1.00,reset:"Standard",code:"",streak:true,vip:"",games:"Starspell, The Great Pigsby",notes:"",isnew:false,isbest:false},
+  {name:"Stake.us",url:"http://www.stake.us/?c=ygrlCMSt",tier:"S",daily:1.00,reset:"Timed",code:"ygrlCMSt",streak:false,vip:"Yes",games:"Dice",notes:"",isnew:false,isbest:true},
+  {name:"Lucky Land Slots",url:"https://luckylandslots.com/",tier:"S",daily:1.00,reset:"Timed",code:"",streak:true,vip:"Yes",games:"Blackjack, Luckyland 7",notes:"",isnew:false,isbest:false},
+  {name:"Lucky Land Casino",url:"https://play.luckylandcasino.com/",tier:"S",daily:1.00,reset:"Timed",code:"",streak:true,vip:"Yes",games:"Blackjack, Luckyland 7",notes:"",isnew:false,isbest:false},
+  {name:"Realprize",url:"https://www.realprize.com/refer/828696",tier:"S",daily:0.60,reset:"Timed",code:"828696",streak:false,vip:"Yes",games:"Blackjack",notes:"Frequent Amazing Deals!!!",isnew:false,isbest:true},
+  {name:"Spin Quest",url:"http://spinquest.com/?u=28VBOIN",tier:"S",daily:1.00,reset:"Timed",code:"28VBOIN",streak:false,vip:"",games:"Plinko, Roulette",notes:"3x Playthrough",isnew:false,isbest:false},
+  {name:"Lonestar Casino",url:"https://lonestarcasino.com/refer/974688",tier:"S",daily:1.00,reset:"Timed",code:"974688",streak:true,vip:"Yes",games:"Blackjack",notes:"Frequent Amazing Deals!!!",isnew:false,isbest:true},
+  {name:"Spin Pals",url:"https://www.spinpals.com/?referralcode=13ce616b-6f88-44b0-9aeb-46553bb6ac90",tier:"S",daily:1.00,reset:"Timed",code:"",streak:true,vip:"Yes",games:"Plinko, Mines",notes:"Daily & Wheel",isnew:false,isbest:false},
+  {name:"Pulsz",url:"http://www.pulsz.com/?invited_by=k7g79p",tier:"S",daily:0.80,reset:"Timed",code:"k7g79p",streak:true,vip:"",games:"Blackjack",notes:"Frequent Amazing Deals!!!",isnew:false,isbest:true},
+  {name:"Pulsz Bingo",url:"http://www.pulszbingo.com/?invited_by=cs9nab",tier:"S",daily:0.50,reset:"Timed",code:"cs9nab",streak:false,vip:"",games:"Blackjack",notes:"Frequent Amazing Deals!!!",isnew:false,isbest:false},
+  {name:"Win Bonanza",url:"https://winbonanza.com/register/ba23079f-779a-465e-9f3f-f4827ccf5c42",tier:"S",daily:1.00,reset:"Standard",code:"",streak:false,vip:"Yes",games:"Starspell, The Great Pigsby",notes:"Zula Sister Site!",isnew:true,isbest:false},
+  {name:"Coin Frenzy",url:"https://coinfrenzy.com/?referralcode=aggie21",tier:"S",daily:1.00,reset:"Timed",code:"aggie21",streak:false,vip:"",games:"Blackjack",notes:"",isnew:true,isbest:false},
+  {name:"Shuffle",url:"https://preprod.shuffle.us/?r=aggie21",tier:"A",daily:0.40,reset:"Standard",code:"aggie21",streak:true,vip:"Yes",games:"Blackjack, Dice",notes:"",isnew:false,isbest:false},
+  {name:"Modo",url:"https://modo.us/?referralCode=LOGDL4",tier:"A",daily:1.00,reset:"Standard",code:"LOGDL4",streak:true,vip:"Amazing VIP",games:"Blackjack",notes:"Daily increases with VIP Level. Many deals",isnew:false,isbest:true},
+  {name:"Fortune Wins",url:"https://fortunewins.com/signup/1b0e85b4-f63c-4cc4-a85f-034e90f48d23",tier:"A",daily:0.60,reset:"Standard",code:"",streak:true,vip:"",games:"Plinko",notes:"",isnew:false,isbest:false},
+  {name:"Global Poker",url:"https://play.globalpoker.com/register?referral=rQxSEUUS",tier:"A",daily:0.50,reset:"Standard",code:"",streak:true,vip:"",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"Casino Click",url:"https://casino.click/?modal=iqs-sign-up&ReferenceCode=9474&AffiliatePlatformId=200",tier:"A",daily:0.50,reset:"Standard",code:"",streak:false,vip:"",games:"Samba Rio Spins",notes:"",isnew:false,isbest:false},
+  {name:"Yay Casino",url:"https://www.yaycasino.com/signup/52a0ea2f-f19b-45f8-8560-a0498a5224f4",tier:"A",daily:1.00,reset:"Standard",code:"",streak:true,vip:"",games:"Starspell",notes:"",isnew:false,isbest:false},
+  {name:"Goldenhearts",url:"https://goldenheartsgames.com/referral/X4KEF7OVHT",tier:"A",daily:0.50,reset:"Standard",code:"X4KEF7OVHT",streak:true,vip:"",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"My Prize",url:"https://myprize.us/invite/wailingWolf149",tier:"A",daily:0.70,reset:"Standard",code:"",streak:true,vip:"Yes",games:"Plinko",notes:"",isnew:false,isbest:false},
+  {name:"Lott-O-Fun",url:"https://www.lott-o-fun.net/?referral_code=849d9bac-28db-459e-a390-b30883a19576",tier:"A",daily:1.00,reset:"Timed",code:"",streak:false,vip:"",games:"",notes:"Daily & Wheel",isnew:false,isbest:false},
+  {name:"Triller",url:"https://www.trillersweeps.com/?referral_code=a65332d7-6619-4b92-a05b-9a146bfde208",tier:"A",daily:0.75,reset:"Timed",code:"",streak:false,vip:"",games:"",notes:"",isnew:false,isbest:false},
+  {name:"Bitsky",url:"https://www.bitsky.bet/affiliate-invite/?affiliate_code=MzczMTQ=",tier:"A",daily:0.75,reset:"Timed",code:"MzczMTQ",streak:true,vip:"Yes",games:"",notes:"Daily & Wheel",isnew:true,isbest:false},
+  {name:"Sweeps USA",url:"https://sweepsusa.com/?ref=aggie21_3926",tier:"A",daily:0.75,reset:"Timed",code:"aggie21_3926",streak:false,vip:"",games:"",notes:"Daily & Wheel",isnew:true,isbest:false},
+  {name:"Yotta",url:"https://join.withyotta.com/AGGIE21",tier:"A",daily:1.00,reset:"Standard",code:"aggie21",streak:true,vip:"",games:"Blackjack, Roulette",notes:"",isnew:true,isbest:false},
+  {name:"Sweep Jungle",url:"https://sweepjungle.com/?ref=B0E952E5132B0BCB&modal=register",tier:"A",daily:0.50,reset:"Standard",code:"B0E952E5132B0BCB",streak:true,vip:"Yes",games:"",notes:"Daily & Wheel, Great Deals",isnew:false,isbest:false},
+  {name:"Sheesh",url:"https://sheeshcasino.com/?ref=ztblzjl",tier:"A",daily:1.00,reset:"Standard",code:"",streak:true,vip:"Amazing VIP",games:"Limbo, Mines, Roulette",notes:"Daily increases with VIP Level and purchases",isnew:false,isbest:false},
+  {name:"Chip n Win",url:"https://chipnwin.com/?earn=fvTDvgbi",tier:"A",daily:0.50,reset:"Standard",code:"fvTDvgbi",streak:true,vip:"Yes",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"Sweep Stars",url:"https://sweepstars.us/?earn=b5U7itVG",tier:"A",daily:0.50,reset:"Standard",code:"b5U7itVG",streak:true,vip:"Yes",games:"Blackjack",notes:"Chip n Win Sister Site",isnew:true,isbest:false},
+  {name:"Jackpota",url:"https://www.jackpota.com/?r=69423967",tier:"A",daily:0.45,reset:"Timed",code:"69423967",streak:false,vip:"",games:"Aztec Fire 2",notes:"Frequent Deals",isnew:false,isbest:false},
+  {name:"Luna Land",url:"https://lunalandcasino.com/?inviter=8240b572-25a1-5af8-89ab-f0b789f2b09e&utm_source=referral&utm_medium=inviteafriend",tier:"A",daily:0.50,reset:"Timed",code:"",streak:true,vip:"Great VIP",games:"Plinko",notes:"Great daily with VIP",isnew:false,isbest:false},
+  {name:"Zumo",url:"https://zumo.us/?ref=922D88F25A270070&modal=register",tier:"A",daily:0.50,reset:"Standard",code:"",streak:false,vip:"Yes",games:"",notes:"Sister to Sweep Jungle",isnew:true,isbest:false},
+  {name:"LuckXpress",url:"https://www.luckxpress.com/signup?ref=david.aggie21",tier:"A",daily:0.50,reset:"",code:"",streak:false,vip:"",games:"",notes:"",isnew:false,isbest:false},
+  {name:"Lucky One",url:"https://luckyone.us/?referralCode=",tier:"A",daily:0.50,reset:"",code:"",streak:false,vip:"",games:"",notes:"",isnew:true,isbest:false},
+  {name:"Spree",url:"https://spree.com/?r=296076",tier:"A",daily:0.30,reset:"Timed",code:"296076",streak:false,vip:"Yes",games:"Plinko",notes:"",isnew:false,isbest:false},
+  {name:"ClubsPoker",url:"https://play.clubs.poker/?referralCode=122160",tier:"B",daily:0.20,reset:"Standard",code:"122160",streak:false,vip:"",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"Dara",url:"https://daracasino.com/signup?refferalCode=6PWpB1l3SG",tier:"B",daily:0.30,reset:"Standard",code:"",streak:false,vip:"Yes",games:"",notes:"",isnew:false,isbest:false},
+  {name:"Baba Casino",url:"https://play.babacasino.com/",tier:"B",daily:0.40,reset:"Standard",code:"",streak:true,vip:"Yes",games:"",notes:"",isnew:false,isbest:false},
+  {name:"GetZoot",url:"https://getzoot.us/?referralCode=ZOOTwithUSER30689",tier:"B",daily:0.45,reset:"Standard",code:"ZOOTwithUSER30689",streak:true,vip:"",games:"Roulette",notes:"Daily & Wheel",isnew:false,isbest:false},
+  {name:"Ruby Sweeps",url:"https://play.rubysweeps.com/",tier:"B",daily:0.20,reset:"Standard",code:"",streak:false,vip:"",games:"Sunken Treasure",notes:"",isnew:false,isbest:false},
+  {name:"Rolling Riches",url:"https://www.rollingriches.com/",tier:"B",daily:0.20,reset:"Standard",code:"",streak:false,vip:"",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"Jefe Bet",url:"https://www.jefebet.com/",tier:"B",daily:0.20,reset:"Standard",code:"",streak:false,vip:"",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"Rolla",url:"https://www.rolla.com/?raf=5211",tier:"B",daily:0.25,reset:"Standard",code:"5211",streak:false,vip:"",games:"",notes:"",isnew:false,isbest:false},
+  {name:"High 5 Casino",url:"https://high5casino.com/gc?adId=INV001%3Adavid.aggie21",tier:"B",daily:0.20,reset:"Standard",code:"",streak:true,vip:"Yes",games:"Plinko",notes:"",isnew:false,isbest:false},
+  {name:"Coinz.us",url:"https://coinz.us/?referral_code=4746714074026bbe",tier:"B",daily:0.40,reset:"Standard",code:"4746714074026bbe",streak:false,vip:"Yes",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"Ace",url:"https://www.ace.com/lp?r=4873209b%2F24589981",tier:"B",daily:0.30,reset:"Timed",code:"",streak:false,vip:"Yes",games:"Aztec Fire 2",notes:"",isnew:false,isbest:false},
+  {name:"Mega Bonanza",url:"https://www.megabonanza.com/?r=49221892",tier:"B",daily:0.25,reset:"Timed",code:"49221892",streak:false,vip:"Yes",games:"Aztec Fire 2",notes:"",isnew:false,isbest:false},
+  {name:"Moozi",url:"https://moozi.com/signup?referral_code=5715019871",tier:"B",daily:0.30,reset:"Timed",code:"5715019871",streak:false,vip:"Yes",games:"Blackjack",notes:"",isnew:false,isbest:false},
+  {name:"Spindoo",url:"https://www.spindoo.us/?r=23963859",tier:"B",daily:0.30,reset:"Timed",code:"23963859",streak:false,vip:"",games:"",notes:"",isnew:false,isbest:false},
+  {name:"Lucky Stake",url:"https://luckystake.com/?c=33206_WMKVTnMU",tier:"B",daily:0.25,reset:"Timed",code:"",streak:true,vip:"Yes",games:"",notes:"",isnew:false,isbest:false},
+  {name:"Chanced",url:"https://chanced.com/c/dx7ey1",tier:"B",daily:0.20,reset:"Timed",code:"dx7ey1",streak:true,vip:"Yes",games:"Blackjack, Plinko",notes:"",isnew:false,isbest:false},
+  {name:"Punt",url:"https://punt.com/c/y2n281",tier:"B",daily:0.20,reset:"Timed",code:"y2n281",streak:true,vip:"Yes",games:"Blackjack, Plinko",notes:"",isnew:false,isbest:false},
+  {name:"Win Panda",url:"https://www.winpanda.com/?referral_code=e0d515b6-8f58-4a41-bec6-ba3770497e7c",tier:"B",daily:0.40,reset:"Timed",code:"",streak:true,vip:"Yes",games:"Plinko",notes:"Daily & Wheel",isnew:false,isbest:false},
+  {name:"Stackr",url:"https://www.stackrcasino.com/?referralcode=8f625eea-e4e5-4c2b-83bf-39786b13f278",tier:"B",daily:0.20,reset:"Timed",code:"",streak:false,vip:"Yes",games:"",notes:"Daily & Wheel",isnew:false,isbest:false},
+];
+
+const tierOrder = {SS:0,S:1,A:2,B:3,C:4};
+let activeTier = 'all';
+let sortCol = 'default';
+let sortDir = 1;
+
+function vipHtml(v) {
+  if (!v) return '<span style="color:var(--muted)">-</span>';
+  if (v==='Amazing VIP') return '<span class="vip-amazing">Amazing</span>';
+  if (v==='Great VIP') return '<span class="vip-great">Great</span>';
+  return '<span class="vip-yes">Yes</span>';
+}
+
+function renderRows(data) {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  data.forEach(s => {
+    // name block color encodes best/new/ss status
+    const resetHtml = s.reset === 'Standard' ? '<span class="reset-S">STANDARD</span>' :
+                      s.reset === 'Timed'    ? '<span class="reset-T">TIMED</span>' : '<span style="color:var(--muted)">-</span>';
+    const codeHtml = s.code ? `<span class="code-cell">${s.code}</span>` : '<span style="color:var(--muted)">-</span>';
+    const streakHtml = s.streak ? '<span class="yes-dot">YES</span>' : '<span class="no-dot">-</span>';
+    const notesId = 'n_' + Math.random().toString(36).slice(2);
+    const notesHtml = s.notes
+      ? `<span class="notes-trunc" id="${notesId}" onclick="toggleNote('${notesId}')">${s.notes}</span>`
+      : '';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="cell-name"><a class="name-block ${s.tier==='SS'||s.tier==='S' ? 'name-s' : s.tier==='A' ? 'name-a' : s.tier==='B' ? 'name-b' : 'name-plain'}" href="${s.url}" target="_blank">${s.name}</a></div></td>
+      <td><a class="signup-btn" href="${s.url}" target="_blank">SIGNUP</a></td>
+      <td><span class="tier-badge tier-${s.tier}">${s.tier}</span></td>
+      <td class="daily">$${s.daily.toFixed(2)}</td>
+      <td>${resetHtml}</td>
+      <td>${codeHtml}</td>
+      <td>${streakHtml}</td>
+      <td>${vipHtml(s.vip)}</td>
+      <td class="games-cell">${s.games||'<span style="color:var(--muted)">-</span>'}</td>
+      <td class="notes-cell">${notesHtml}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  const total = sites.length;
+  document.getElementById('count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${total}</strong> casinos`;
+}
+
+function toggleNote(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('expanded');
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const sort = document.getElementById('sort-select').value;
+  let filtered = sites.filter(s => {
+    const tierMatch = activeTier === 'all' ? true :
+                      activeTier === 'new' ? s.isnew :
+                      activeTier === 'best' ? s.isbest :
+                      s.tier === activeTier;
+    const textMatch = !q || [s.name,s.games,s.notes,s.code].join(' ').toLowerCase().includes(q);
+    return tierMatch && textMatch;
+  });
+  if (sort==='daily-desc') filtered.sort((a,b)=>b.daily-a.daily);
+  else if (sort==='daily-asc') filtered.sort((a,b)=>a.daily-b.daily);
+  else if (sort==='name-asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
+  else filtered.sort((a,b)=>(tierOrder[a.tier]??9)-(tierOrder[b.tier]??9)||b.daily-a.daily);
+  renderRows(filtered);
+}
+
+function setTier(tier, btn) {
+  activeTier = tier;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function sortBy(col) {
+  document.getElementById('sort-select').value = col === 'daily' ? 'daily-desc' : 'default';
+  applyFilters();
+}
+
+applyFilters();
+</script>
+</body>
+</html>
