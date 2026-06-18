@@ -296,8 +296,7 @@
         <th style="width:60px">Signup</th>
         <th style="width:44px" onclick="sortBy('tier')">Tier <span class="arr">↕</span></th>
         <th style="width:70px" onclick="sortBy('daily')">Daily SC <span class="arr">↕</span></th>
-        <th style="width:80px">Reset</th>
-        <th style="width:130px">Referral Code</th>
+                <th style="width:130px">Referral Code</th>
         <th style="width:54px">Streak</th>
         <th style="width:90px">VIP</th>
         <th style="width:150px">Fav Games</th>
@@ -406,8 +405,6 @@ function renderRows(data) {
   tbody.innerHTML = '';
   data.forEach(s => {
     // name block color encodes best/new/ss status
-    const resetHtml = s.reset === 'Standard' ? '<span class="reset-S">STANDARD</span>' :
-                      s.reset === 'Timed'    ? '<span class="reset-T">TIMED</span>' : '<span style="color:var(--muted)">-</span>';
     const codeHtml = s.code ? `<span class="code-cell">${s.code}</span>` : '<span style="color:var(--muted)">-</span>';
     const streakHtml = s.streak ? '<span class="yes-dot">YES</span>' : '<span class="no-dot">-</span>';
     const notesId = 'n_' + Math.random().toString(36).slice(2);
@@ -420,7 +417,6 @@ function renderRows(data) {
       <td><a class="signup-btn" href="${s.url}" target="_blank">SIGNUP</a></td>
       <td><span class="tier-badge tier-${s.tier}">${s.tier}</span></td>
       <td class="daily">$${s.daily.toFixed(2)}</td>
-      <td>${resetHtml}</td>
       <td>${codeHtml}</td>
       <td>${streakHtml}</td>
       <td>${vipHtml(s.vip)}</td>
