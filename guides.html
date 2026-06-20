@@ -30,6 +30,11 @@
   .nav-links a:hover,.nav-links a.active{color:var(--text);}
   .nav-links a.active{color:var(--gold);}
   .nav-cta{background:var(--gold);color:#0a0c0f;font-size:12px;font-weight:700;letter-spacing:.05em;padding:7px 16px;border-radius:4px;text-decoration:none;}
+  .nav-pills{display:flex;align-items:center;gap:8px;}
+  .pill-btn{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.03em;padding:7px 14px;border-radius:20px;text-decoration:none;transition:opacity .15s;}
+  .pill-btn:hover{opacity:.85;}
+  .pill-discord{background:#5865F2;color:#fff;}
+  .pill-tracker{background:var(--gold);color:#0a0c0f;}
 
   .page-header{padding:4rem 2rem 2rem;max-width:900px;margin:0 auto;text-align:center;}
   .page-eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;border:1px solid var(--gold-dim);padding:4px 14px;border-radius:2px;margin-bottom:1.5rem;}
@@ -38,8 +43,15 @@
 
   .guides-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1000px;margin:0 auto;padding:2rem;}
   .guide-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.75rem;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s;display:flex;flex-direction:column;}
+  .guide-card.featured{border:2px solid var(--gold);background:linear-gradient(180deg, rgba(201,168,76,0.08) 0%, var(--bg2) 100%);position:relative;grid-column:1 / -1;}
+  .guide-card.featured:hover{border-color:var(--gold);transform:translateY(-2px);}
+  .featured-badge{position:absolute;top:-12px;left:1.75rem;background:var(--gold);color:#0a0c0f;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:20px;}
+  .guide-card.featured h2{font-size:1.5rem;}
+  .guide-card.featured p{font-size:14px;max-width:560px;}
   .guide-card:hover{border-color:var(--gold-dim);transform:translateY(-2px);}
   .guide-card-tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--green);background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);padding:3px 10px;border-radius:20px;margin-bottom:1rem;width:fit-content;}
+  .guide-card-top{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
+  .site-badge{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:14px;flex-shrink:0;}
   .guide-card h2{font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:8px;}
   .guide-card p{font-size:13px;color:var(--muted2);line-height:1.55;flex:1;}
   .guide-card-footer{margin-top:1.25rem;font-family:var(--mono);font-size:11px;color:var(--gold);display:flex;align-items:center;gap:6px;}
@@ -63,6 +75,7 @@
     <a href="tracker.html">Tracker</a>
     <a href="guides.html" class="active">Game Guides</a>
   </div>
+  <a class="pill-btn pill-discord" href="https://discord.gg/FV72HtRyD" target="_blank">Discord</a>
   <a class="nav-cta" href="tracker.html">View Sites</a>
 </nav>
 
@@ -73,6 +86,14 @@
 </div>
 
 <div class="guides-grid">
+
+  <a class="guide-card featured" href="guides/lavish-luck-guide.html">
+    <span class="featured-badge">💰 BIGGEST EARNER</span>
+    <span class="guide-card-tag" style="color:var(--gold);background:var(--gold-glow);border-color:var(--gold-dim);">SITE STRATEGY</span>
+    <h2>Lavish Luck Guide</h2>
+    <p>Turn Lavish Luck, Jackpot Go, Cider Casino, and Gleaming Slots' Weekly Subscriptions into a repeatable $800+/month combined return. Start here.</p>
+    <div class="guide-card-footer">Read guide →</div>
+  </a>
 
   <a class="guide-card" href="guides/blackjack-basic-strategy.html">
     <span class="guide-card-tag">GAME STRATEGY</span>
@@ -113,13 +134,6 @@
     <span class="guide-card-tag">GAME STRATEGY</span>
     <h2>Dice VIP Grinding Strategy</h2>
     <p>A controlled, low-risk martingale dice method for clearing VIP wager requirements on Stake.us and similar sites.</p>
-    <div class="guide-card-footer">Read guide →</div>
-  </a>
-
-  <a class="guide-card" href="guides/luckyland-diamond-duck-guide.html">
-    <span class="guide-card-tag" style="color:var(--gold);background:var(--gold-glow);border-color:var(--gold-dim);">SITE VIP GUIDE</span>
-    <h2>LuckyLand Diamond Duck Guide</h2>
-    <p>Land 80 SC for under $2 every month with LuckyLand's repeatable Diamond Duck reward program.</p>
     <div class="guide-card-footer">Read guide →</div>
   </a>
 
