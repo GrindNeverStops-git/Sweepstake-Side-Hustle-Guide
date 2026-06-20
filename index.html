@@ -73,6 +73,11 @@
     transition: opacity 0.2s;
   }
   .nav-cta:hover { opacity: 0.85; }
+  .nav-pills{display:flex;align-items:center;gap:10px;}
+  .pill-btn{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.03em;padding:7px 14px;border-radius:20px;text-decoration:none;transition:opacity .15s;}
+  .pill-btn:hover{opacity:.85;text-decoration:none;}
+  .pill-discord{background:#5865F2;color:#fff;}
+  .pill-tracker{background:var(--gold);color:#0a0c0f;}
 
   /* ── HERO ── */
   .hero {
@@ -293,10 +298,11 @@
     <a href="#intro">Start Here</a>
     <a href="#earnings">Earnings</a>
     <a href="guides.html">Game Guides</a>
-    <a href="#strategy">Strategy</a>
-    <a href="#spreadsheet">Spreadsheet</a>
   </div>
-  <a class="nav-cta" href="tracker.html" target="_blank">View Spreadsheet ↗</a>
+  <div class="nav-pills">
+    <a class="pill-btn pill-discord" href="https://discord.gg/FV72HtRyD" target="_blank">Discord</a>
+    <a class="pill-btn pill-tracker" href="tracker.html">Tracker ↗</a>
+  </div>
 </nav>
 
 <!-- HERO -->

@@ -55,6 +55,9 @@
   .nav-links a { color: var(--muted2); font-size: 12px; text-decoration: none; transition: color 0.15s; }
   .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
   .nav-right { display: flex; align-items: center; gap: 10px; }
+  .pill-btn{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.03em;padding:7px 14px;border-radius:20px;text-decoration:none;transition:opacity .15s;}
+  .pill-btn:hover{opacity:.85;text-decoration:none;}
+  .pill-discord{background:#5865F2;color:#fff;}
   .nav-updated { font-size: 11px; color: var(--muted); font-style: italic; }
 
   /* PAGE HEADER */
@@ -238,7 +241,7 @@
     <a href="guides.html">Game Guides</a>
   </div>
   <div class="nav-right">
-    <span class="nav-updated">Last updated: 6/17/2026</span>
+    <a class="pill-btn pill-discord" href="https://discord.gg/FV72HtRyD" target="_blank">Discord</a>
   </div>
 </nav>
 
