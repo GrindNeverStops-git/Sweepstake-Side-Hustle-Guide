@@ -37,12 +37,49 @@
     border-bottom: 1px solid var(--border);
     padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
   }
+  .brand-wrap { display: flex; align-items: center; gap: 10px; }
   .nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--cyan); letter-spacing: 0.08em; text-decoration: none; text-shadow: 0 0 14px var(--cyan-glow); }
   .nav-links { display: flex; gap: 2rem; }
   .nav-links a { color: var(--muted2); font-size: 13px; text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-links a:hover { color: var(--text); }
   .nav-links a.active { color: var(--cyan); }
   .nav-pills { display: flex; align-items: center; gap: 10px; }
+  .menu-wrap { position: relative; }
+  .menu-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    background: transparent; color: var(--muted2);
+    border: 1px solid var(--border2); border-radius: 8px;
+    cursor: pointer; transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .menu-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+  .menu-dropdown {
+    position: absolute; top: calc(100% + 12px); right: 0;
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 12px; padding: 10px; min-width: 220px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+    z-index: 200;
+  }
+  .menu-wrap.open .menu-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .menu-dropdown a {
+    display: block; color: var(--text); font-size: 15px; font-weight: 500;
+    text-decoration: none; padding: 12px 14px; border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .menu-dropdown a:hover { background: rgba(255,255,255,0.06); color: var(--cyan); }
+  .menu-divider { height: 1px; background: var(--border); margin: 6px 4px; }
+  .menu-socials { display: flex; gap: 8px; padding: 8px 6px 2px; }
+  .menu-socials a {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: 12px; font-weight: 700; padding: 9px 8px; border-radius: 8px;
+  }
+  .menu-dropdown.dropdown-left { right: auto; left: 0; }
+  .breadcrumb { max-width: 860px; margin: 0 auto; padding: 1.25rem 2rem 0; font-size: 13px; color: var(--muted); }
+  .breadcrumb a { color: var(--muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--cyan); }
+  .breadcrumb .current { color: var(--text); font-weight: 600; }
   .pill-btn { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; padding: 7px 14px; border-radius: 20px; text-decoration: none; transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s; }
   .pill-btn:hover { opacity: 0.85; transform: translateY(-1px); }
   .pill-discord { background: #5865F2; color: #fff; }
@@ -131,7 +168,24 @@
 <div class="glow-spot glow-spot-1"></div>
 
 <nav>
-  <a class="nav-logo" href="index.html">SWEEPSTAKES HUSTLE</a>
+  <div class="brand-wrap">
+    <div class="menu-wrap" id="menuWrap">
+      <button class="menu-btn" onclick="document.getElementById('menuWrap').classList.toggle('open')" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4.5H16M2 9H16M2 13.5H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <div class="menu-dropdown dropdown-left">
+        <a href="index.html">Overview</a>
+        <a href="tracker.html">Tracker</a>
+        <a href="guides.html">Game Guides</a>
+        <a href="faq.html">FAQ</a>
+        <div class="menu-divider"></div>
+        <div class="menu-socials">
+          <a class="pill-btn pill-discord" href="https://discord.gg/FV72HtRyD" target="_blank">Discord</a>
+        </div>
+      </div>
+    </div>
+    <a class="nav-logo" href="index.html">SWEEPSTAKES HUSTLE</a>
+  </div>
   <div class="nav-links">
     <a href="index.html">Overview</a>
     <a href="tracker.html">Tracker</a>
@@ -143,6 +197,15 @@
     <a class="nav-cta" href="tracker.html">View Sites</a>
   </div>
 </nav>
+
+<div class="breadcrumb"><a href="index.html">Home</a> &nbsp;›&nbsp; <span class="current">FAQ</span></div>
+
+<script>
+  document.addEventListener('click', function(e) {
+    const wrap = document.getElementById('menuWrap');
+    if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
+  });
+</script>
 
 <!-- BIG FAQ -->
 <section class="bigfaq">
